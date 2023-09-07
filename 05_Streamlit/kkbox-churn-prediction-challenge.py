@@ -22,7 +22,7 @@ def my_hash_func(*args, **kwargs):
 
 @st.cache(hash_funcs={types.FunctionType: my_hash_func})
 def load_data():
-    data = pd.read_csv('/Users/halmorishima/Github/CapstonePJT-KKBox_Churn_Prediction/05_Streamlit/data/train_cleaned_st_deploy.csv')
+    data = pd.read_csv('data/train_cleaned_st_deploy.csv')
     return data
 
 data = load_data()
