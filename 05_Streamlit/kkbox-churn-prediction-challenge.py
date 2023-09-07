@@ -44,8 +44,14 @@ X_test_scaled = scaler.transform(X_test)
 model = LogisticRegression(penalty='l2', C=0.1, random_state=42, max_iter=1000)
 model.fit(X_train_scaled, y_train)  # Adding the model training step
 
+@st.cache_data
+def get_msno_list():
+    return data['msno'].unique().tolist()
+
+msno_list = get_msno_list()
+
 # Create a dropdown menu for selecting msno
-msno_list = data['msno'].unique().tolist()
+msno_list = get_msno_list()[:100]
 selected_msno = st.selectbox('Please select an msno:', msno_list)
 
 # Display information related to the selected msno
