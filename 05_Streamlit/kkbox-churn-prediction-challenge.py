@@ -56,7 +56,7 @@ selected_msno = st.selectbox('Please select an msno:', msno_list)
 
 # Display information related to the selected msno
 st.write('Information for the selected msno:')
-st.write(data[data['msno'] == selected_msno][['bd', 'payment_plan_days', 'is_auto_renew', 'is_cancel']])
+st.markdown(data[data['msno'] == selected_msno][['bd', 'payment_plan_days', 'is_auto_renew', 'is_cancel']].to_markdown(index=False), unsafe_allow_html=True)
 
 if st.button('Calculate Churn Probability'):
     # Get data for the selected msno (all features)
@@ -69,4 +69,4 @@ if st.button('Calculate Churn Probability'):
     churn_proba = model.predict_proba(selected_data_scaled)[:, 1]
     
     # Display Churn Probability
-    st.write(f'Churn Probability: {churn_proba[0]:.2f}')
+    st.write(f'Churn Probability: {churn_proba[0]*100:.2f}%')
