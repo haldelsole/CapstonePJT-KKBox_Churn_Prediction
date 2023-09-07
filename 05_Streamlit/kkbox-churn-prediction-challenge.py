@@ -44,16 +44,24 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# Training the model
-model = LogisticRegression(penalty='l2', C=0.1, random_state=42, max_iter=1000)
-model.fit(X_train_scaled, y_train)
+# Create a dropdown menu for selecting msno
+msno_list = data['msno'].unique().tolist()
+selected_msno = st.selectbox('Please select an msno:', msno_list)
 
-# Creating a button to calculate probabilities
-if st.button('Calculate Probabilities'):
-    # Predicting probabilities on the test set
-    y_proba = model.predict_proba(X_test_scaled)
+# Display information related to the selected msno
+st.write('Information for the selected msno:')
+st.write(data[data['msno'] == selected_msno])
+
+# Create a button to calculate and display Churn Probability
+if st.button('Calculate Churn Probability'):
+    # Get data for the selected msno
+    selected_data = data[data['msno'] == selected_msno].drop(['msno', 'is_churn'], axis=1)
     
-    # Storing the results in a dataframe
-    result_df = pd.DataFrame({'msno': msno_test, 'is_churn_proba': y_proba[:, 1]})
-
-
+    # Scale the data
+    selected_data_scaled = scaler.transform(selected_data)
+    
+    # Calculate Churn Probability
+    churn_proba = model.predict_proba(selected_data_scaled)[:, 1]
+    
+    # Display Churn Probability
+    st.write(f'Churn Probability: {churn_proba[0]:.2f}')
