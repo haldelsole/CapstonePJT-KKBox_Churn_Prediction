@@ -10,7 +10,6 @@ import pandas as pd
 import types
 import random
 
-
 # %%
 # Step 1: Title and Intro
 st.title('Can We Predict Churn Rate?: The Lifeline of Startups and Their Customers')
@@ -20,15 +19,12 @@ st.write("This app uses a logistics regression for KKBox's Churn Prediction Chal
 def my_hash_func(*args, **kwargs):
     return hash(args + tuple(kwargs.items()))
 
-@st.cache(hash_funcs={types.FunctionType: my_hash_func})
+@st.cache_data(hash_funcs={types.FunctionType: my_hash_func})  # Updated to st.cache_data
 def load_data():
     data = pd.read_csv('05_Streamlit/data/train_cleaned_st_deploy.csv')
     return data
 
 data = load_data()
-
-# %%
-data.head()
 
 # %%
 # Preparing the data
@@ -43,6 +39,10 @@ X_train, X_test, y_train, y_test, msno_train, msno_test = train_test_split(X, y,
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
+
+# Training the model
+model = LogisticRegression(penalty='l2', C=0.1, random_state=42, max_iter=1000)
+model.fit(X_train_scaled, y_train)  # Adding the model training step
 
 # Create a dropdown menu for selecting msno
 msno_list = data['msno'].unique().tolist()
