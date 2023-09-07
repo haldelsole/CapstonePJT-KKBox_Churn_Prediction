@@ -56,7 +56,7 @@ selected_msno = st.selectbox('Please select an msno:', msno_list)
 
 # Display information related to the selected msno
 st.write('Information for the selected msno:')
-st.markdown(data[data['msno'] == selected_msno][['bd', 'payment_plan_days', 'is_auto_renew', 'is_cancel']].to_markdown(index=False), unsafe_allow_html=True)
+st.markdown(data[data['msno'] == selected_msno][['bd', 'payment_plan_days', 'is_auto_renew', 'is_cancel']].to_html(index=False), unsafe_allow_html=True)
 
 if st.button('Calculate Churn Probability'):
     # Get data for the selected msno (all features)
