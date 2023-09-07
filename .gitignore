@@ -1,0 +1,10 @@
+
+data/.DS_Store
+data/members_v3.csv
+data/sample_submission_v2.csv
+data/train_cleaned.csv
+data/train_dataset.csv
+data/train_v2.csv
+data/transactions_v2.csv
+data/user_logs_v2.csv
+data/WSDMChurnLabeller.scala
