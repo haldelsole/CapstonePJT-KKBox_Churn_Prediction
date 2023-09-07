@@ -50,12 +50,11 @@ selected_msno = st.selectbox('Please select an msno:', msno_list)
 
 # Display information related to the selected msno
 st.write('Information for the selected msno:')
-st.write(data[data['msno'] == selected_msno])
+st.write(data[data['msno'] == selected_msno][['bd', 'payment_plan_days', 'is_auto_renew', 'is_cancel']])
 
-# Create a button to calculate and display Churn Probability
 if st.button('Calculate Churn Probability'):
     # Get data for the selected msno
-    selected_data = data[data['msno'] == selected_msno].drop(['msno', 'is_churn'], axis=1)
+    selected_data = data[data['msno'] == selected_msno][['bd', 'payment_plan_days', 'is_auto_renew', 'is_cancel']]
     
     # Scale the data
     selected_data_scaled = scaler.transform(selected_data)
@@ -65,3 +64,4 @@ if st.button('Calculate Churn Probability'):
     
     # Display Churn Probability
     st.write(f'Churn Probability: {churn_proba[0]:.2f}')
+
